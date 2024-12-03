@@ -1,0 +1,199 @@
+
+#
+# Preferences
+#
+preferences set plugin-enable-svdatabrowser-new 1
+preferences set toolbar-SimControl-WaveWindow {
+  usual
+  position -row 3
+}
+preferences set toolbar-CursorControl-WaveWindow {
+  usual
+  position -row 3
+}
+preferences set toolbar-TimeSearch-WaveWindow {
+  usual
+  position -row 2
+}
+preferences set toolbar-NavSignalList-WaveWindow {
+  usual
+  position -row 2
+}
+preferences set toolbar-txe_waveform_toggle-WaveWindow {
+  usual
+  position -row 1 -pos 0
+}
+preferences set plugin-enable-groupscope 0
+preferences set plugin-enable-interleaveandcompare 0
+preferences set plugin-enable-waveformfrequencyplot 0
+preferences set toolbar-Windows-WaveWindow {
+  usual
+  position -row 1 -pos 1
+}
+preferences set toolbar-WaveZoom-WaveWindow {
+  usual
+  position -row 3
+}
+
+#
+# Databases
+#
+database require waves -search {
+	./waves.shm/waves.trn
+	/home/grads/s/shubkumr7/UVM_LABs/lab-10-ShubhamKumartamu/work/sim/waves.shm/waves.trn
+}
+
+#
+# Mnemonic Maps
+#
+mmap new  -reuse -name {Boolean as Logic} -radix %b -contents {{%c=FALSE -edgepriority 1 -shape low}
+{%c=TRUE -edgepriority 1 -shape high}}
+mmap new  -reuse -name {Example Map} -radix %x -contents {{%b=11???? -bgcolor orange -label REG:%x -linecolor yellow -shape bus}
+{%x=1F -bgcolor red -label ERROR -linecolor white -shape EVENT}
+{%x=2C -bgcolor red -label ERROR -linecolor white -shape EVENT}
+{%x=* -label %x -linecolor gray -shape bus}}
+
+#
+# Waveform windows
+#
+if {[catch {window new WaveWindow -name "Waveform 1" -geometry 1470x839+0+1}] != ""} {
+    window geometry "Waveform 1" 1470x839+0+1
+}
+window target "Waveform 1" on
+waveform using {Waveform 1}
+waveform sidebar select designbrowser
+waveform set \
+    -primarycursor TimeA \
+    -signalnames name \
+    -signalwidth 175 \
+    -units ns \
+    -valuewidth 75
+waveform baseline set -time 0
+
+set id [waveform add -signals  {
+	{waves::top.inst_htax_tx_intf[3].assert_tx_eot_single_cycle}
+	} ]
+set id [waveform add -signals  {
+	{waves::top.inst_htax_tx_intf[3].tx_eot_single_cycle}
+	} ]
+set id [waveform add -signals  {
+	{waves::top.inst_htax_rx_intf[3].assert_eot_timeout_check}
+	} ]
+set id [waveform add -signals  {
+	{waves::top.inst_htax_rx_intf[3].rx_sot[1:0]}
+	} ]
+set id [waveform add -signals  {
+	{waves::top.inst_htax_rx_intf[3].rx_eot}
+	} ]
+set id [waveform add -signals  {
+	{waves::top.inst_htax_rx_intf[3].tran_cycles_left}
+	} ]
+set id [waveform add -signals  {
+	{waves::top.inst_htax_rx_intf[3].tran_on}
+	} ]
+set id [waveform add -signals  {
+	{waves::top.inst_htax_rx_intf[3].rx_data[63:0]}
+	} ]
+set id [waveform add -signals  {
+	{waves::top.inst_htax_rx_intf[3].rx_vc_gnt[1:0]}
+	} ]
+set id [waveform add -signals  {
+	{waves::top.inst_htax_rx_intf[3].rx_vc_req[1:0]}
+	} ]
+set id [waveform add -signals  {
+	waves::top.inst_htax_top.htax_outport_data_mux_FU3.eot_out
+	} ]
+set id [waveform add -signals  {
+	waves::top.inst_htax_top.htax_outport_data_mux_FU3.selected_eot
+	} ]
+set id [waveform add -signals  {
+	{waves::top.inst_htax_top.htax_outport_data_mux_FU3.inport_sel_reg[3:0]}
+	} ]
+set id [waveform add -signals  {
+	{waves::top.inst_htax_top.htax_outport_data_mux_FU3.selected_sot[1:0]}
+	} ]
+set id [waveform add -signals  {
+	{waves::top.inst_htax_top.htax_outport_data_mux_FU3.inport_sel[3:0]}
+	} ]
+set id [waveform add -signals  {
+	waves::top.inst_htax_top.htax_outport_data_mux_FU3.any_gnt
+	} ]
+set id [waveform add -signals  {
+	{waves::top.inst_htax_top.htax_outport_data_mux_FU3.eot_in[3:0]}
+	} ]
+set id [waveform add -signals  {
+	waves::top.inst_htax_top.htax_outport_data_mux_FU3.selected_eot
+	} ]
+set id [waveform add -signals  {
+	waves::top.inst_htax_top.fu0_tx_eot
+	} ]
+set id [waveform add -signals  {
+	waves::top.inst_htax_top.fu1_tx_eot
+	} ]
+set id [waveform add -signals  {
+	waves::top.inst_htax_top.fu2_tx_eot
+	} ]
+set id [waveform add -signals  {
+	waves::top.inst_htax_top.fu3_tx_eot
+	} ]
+set id [waveform add -signals  {
+	{waves::top.inst_htax_tx_intf[3].tx_outport_req[3:0]}
+	} ]
+set id [waveform add -signals  {
+	{waves::top.inst_htax_tx_intf[3].tx_vc_req[1:0]}
+	} ]
+set id [waveform add -signals  {
+	{waves::top.inst_htax_tx_intf[3].tx_sot[1:0]}
+	} ]
+set id [waveform add -signals  {
+	{waves::top.inst_htax_tx_intf[3].tx_data[63:0]}
+	} ]
+set id [waveform add -signals  {
+	{waves::top.inst_htax_tx_intf[3].tx_eot}
+	} ]
+set id [waveform add -signals  {
+	{waves::top.inst_htax_tx_intf[3].tx_vc_gnt[1:0]}
+	} ]
+set id [waveform add -signals  {
+	{waves::top.inst_htax_rx_intf[3].tran_on}
+	} ]
+set id [waveform add -signals  {
+	{waves::top.inst_htax_rx_intf[3].rx_sot[1:0]}
+	} ]
+set id [waveform add -signals  {
+	{waves::top.inst_htax_top.fu0_rx_vc_gnt[1:0]}
+	} ]
+set id [waveform add -signals  {
+	{waves::top.inst_htax_top.fu1_rx_vc_gnt[1:0]}
+	} ]
+set id [waveform add -signals  {
+	{waves::top.inst_htax_top.fu2_rx_vc_gnt[1:0]}
+	} ]
+set id [waveform add -signals  {
+	{waves::top.inst_htax_top.fu3_rx_vc_gnt[1:0]}
+	} ]
+set id [waveform add -signals  {
+	{waves::top.inst_htax_top.fu3_inport_ack[3:0]}
+	} ]
+set id [waveform add -signals  {
+	{waves::top.inst_htax_top.fu2_inport_ack[3:0]}
+	} ]
+set id [waveform add -signals  {
+	{waves::top.inst_htax_top.htax_outport_data_mux_FU3.inport_sel_reg[3:0]}
+	} ]
+
+waveform xview limits 293966.573ns 296288.811ns
+
+#
+# Waveform Window Links
+#
+
+#
+# Console windows
+#
+console set -windowname Console
+window geometry Console 600x250+0+0
+
+#
+# Layout selection
+#

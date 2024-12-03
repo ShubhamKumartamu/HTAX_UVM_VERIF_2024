@@ -1,0 +1,72 @@
+htax_seqs.sv:			`uvm_do(req)
+Binary file .htax_vseqs.sv.swp matches
+Binary file .htax_packet_c.sv.swo matches
+Binary file .htax_tx_monitor_c.sv.swp matches
+htax_rx_monitor_c.sv:			//cover_rx_req.sample();       //Sample Coverage on rx_mon_packet
+htax_tx_interface.sv:	logic [PORTS-1:0] tx_outport_req;
+htax_tx_interface.sv:	logic [VC-1:0] 		tx_vc_req;
+htax_tx_interface.sv:   // tx_outport_req is one-hot 
+htax_tx_interface.sv:   property tx_outport_req_one_hot;
+htax_tx_interface.sv:      (|tx_outport_req) |-> $onehot(tx_outport_req);
+htax_tx_interface.sv:   assert_tx_outport_req_one_hot : assert property(tx_outport_req_one_hot)
+htax_tx_interface.sv:      $error("HTAX_TX_INF ERROR : tx_outport request is not one hot encoded");
+htax_tx_interface.sv:   // no tx_outport_req without tx_vc_req
+htax_tx_interface.sv:   property tx_outport_req_vc_req;
+htax_tx_interface.sv:     (~(|tx_outport_req) ##1 (|tx_outport_req)) |-> ( (|tx_vc_req) && ~($past(tx_vc_req)));
+htax_tx_interface.sv:   assert_tx_outport_req_vc_req : assert property(tx_outport_req_vc_req)
+htax_tx_interface.sv:      $error("HTAX_TX_INF ERROR : tx_outport_req high without tx_vc_req");
+htax_tx_interface.sv:   // no tx_vc_req without tx_outport_req
+htax_tx_interface.sv:   property tx_vc_req_outport_req;  
+htax_tx_interface.sv:   //      $rose(tx_vc_req) |-> $rose(tx_outport_req); 
+htax_tx_interface.sv:      (~(|tx_vc_req) ##1 (|tx_vc_req)) |-> ( (|tx_outport_req) && ~($past(tx_outport_req)) && $onehot(tx_outport_req));
+htax_tx_interface.sv:   assert_tx_vc_req_outport_req : assert property(tx_vc_req_outport_req)
+htax_tx_interface.sv:      $error("HTAX_TX_INF ERROR : tx_vc_req high without tx_outport_req");
+htax_tx_interface.sv:   // tx_outport_req and tx_vc_req deasserted simultaneously
+htax_tx_interface.sv:	property tx_outport_req_vc_req_deassert;
+htax_tx_interface.sv:		$fell(|tx_outport_req) |-> !((|tx_vc_req) && (|tx_vc_req));
+htax_tx_interface.sv:	assert_tx_outport_req_vc_req_deassert : assert property(tx_outport_req_vc_req_deassert)
+htax_tx_interface.sv:		$error("HTAX_TX_INF ERROR : tx_outport_req fell without tx_vc_req");
+htax_tx_interface.sv:   // Valid packet transfer – rise of tx_outport_req followed by a tx_vc_gnt followed by tx_sot
+htax_tx_interface.sv:		(|tx_outport_req) |-> ##[1:$] (|tx_vc_gnt) ##[1:$] (|tx_sot) ##[0:$] (|tx_release_gnt) ##[1:$] tx_eot;
+htax_tx_interface.sv:		$error("HTAX_TX_INF ERROR : transmission does not follow the correct order of assertion: tx_outport_req + tx_vc_req, tx_vc_gnt, tx_sot, tx_release_gnt, tx_eot");
+Binary file .htax_packet_c.sv.swp matches
+Binary file .htax_vseqs.sv.swo matches
+htax_packet_c.sv:	//Constraint 3 : VC should be valid VC request
+htax_tx_driver_c.sv:			seq_item_port.get_next_item(req);	//Get next pkt from sequencer
+htax_tx_driver_c.sv:			drive_thru_dut(req);							//Drive pkt to DUT via interface
+htax_tx_driver_c.sv:		htax_tx_intf.tx_outport_req  = 'b0;
+htax_tx_driver_c.sv:  	htax_tx_intf.tx_vc_req       = 'b0;
+htax_tx_driver_c.sv:	//Set htax_tx_intf.tx_outport_req in one-hot fashion from pkt.dest_port
+htax_tx_driver_c.sv:			htax_tx_intf.tx_outport_req[i]=1'b1;
+htax_tx_driver_c.sv:			htax_tx_intf.tx_outport_req[i]=1'b0;
+htax_tx_driver_c.sv:	//Assign pkt.vc to htax_tx_intf.tx_vc_req		
+htax_tx_driver_c.sv:	htax_tx_intf.tx_vc_req = pkt.vc;
+htax_tx_driver_c.sv:	//Reset htax_tx_intf.tx_outport_req and htax_tx_intf.tx_vc_req (to zero)
+htax_tx_driver_c.sv:	htax_tx_intf.tx_outport_req	= 'b0;
+htax_tx_driver_c.sv:	htax_tx_intf.tx_vc_req 			= 'b0;
+htax_vseqs.sv://			`uvm_do_on(req, p_sequencer.htax_seqr[port])
+Binary file .htax_packet_c.sv.swn matches
+htax_rx_interface.sv:	logic [VC-1:0] 	rx_vc_req;
+htax_rx_interface.sv:always @(rx_vc_req) begin
+htax_rx_interface.sv:  	rx_vc_gnt=rx_vc_req;
+htax_top.sv:			.fu0_tx_outport_req ( inst_htax_tx_intf[0].tx_outport_req),
+htax_top.sv:			.fu0_tx_vc_req 			( inst_htax_tx_intf[0].tx_vc_req),
+htax_top.sv:			.fu1_tx_outport_req ( inst_htax_tx_intf[1].tx_outport_req),
+htax_top.sv:			.fu1_tx_vc_req 			( inst_htax_tx_intf[1].tx_vc_req),
+htax_top.sv:			.fu2_tx_outport_req ( inst_htax_tx_intf[2].tx_outport_req),
+htax_top.sv:			.fu2_tx_vc_req 			( inst_htax_tx_intf[2].tx_vc_req),
+htax_top.sv:			.fu3_tx_outport_req ( inst_htax_tx_intf[3].tx_outport_req),
+htax_top.sv:			.fu3_tx_vc_req 			( inst_htax_tx_intf[3].tx_vc_req),
+htax_top.sv:			.fu0_rx_vc_req 			( inst_htax_rx_intf[0].rx_vc_req),
+htax_top.sv:			.fu1_rx_vc_req 			( inst_htax_rx_intf[1].rx_vc_req),
+htax_top.sv:			.fu2_rx_vc_req 			( inst_htax_rx_intf[2].rx_vc_req),
+htax_top.sv:			.fu3_rx_vc_req 			( inst_htax_rx_intf[3].rx_vc_req),
+htax_tx_monitor_c.sv:		//Coverpoint for tx_outport_req: covered all the values 0001,0010,0100,1000
+htax_tx_monitor_c.sv:		OUTPORT_REQ : coverpoint htax_tx_intf.tx_outport_req 	{
+htax_tx_monitor_c.sv:																														bins outport_req [] = {1,2,4,8};
+htax_tx_monitor_c.sv:		//Coverpoint for tx_vc_req: All the VCs are requested atleast once. Ignore what is not allowed, or put it as illegal
+htax_tx_monitor_c.sv:		TX_VC_REQ : coverpoint htax_tx_intf.tx_vc_req 	{
+htax_tx_monitor_c.sv:			//Assign tx_mon_packet.dest_port from htax_tx_intf.tx_outport_req
+htax_tx_monitor_c.sv:					if(htax_tx_intf.tx_outport_req[i]==1'b1)
+htax_tx_monitor_c.sv:				//Assign tx_vc_req to tx_mon_packet.vc
+htax_tx_monitor_c.sv:				tx_mon_packet.vc = htax_tx_intf.tx_vc_req;

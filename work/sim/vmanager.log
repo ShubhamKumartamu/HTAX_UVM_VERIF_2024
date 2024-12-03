@@ -1,0 +1,9 @@
+Cadence vManager(64): 22.03-s001: (c) Copyright 1995-2022 Cadence Design Systems Inc - Simulator version: 22.03-s012 - Coverage engine version: 22.03-s012
+Starting gui mode
+vmanager: *I,MERGL1: The merged icc coverage cache was not reused due to different configuration or set of runs.
+vmanager: *E,coverage.merge_op_aborted_error: Merge operation (session runs merge) is aborted:
+<br>Target model generation failed.
+<br>Merge operation log file - /home/grads/s/shubkumr7/UVM_LABs/lab-10-ShubhamKumartamu/work/sim/vmgr_merge_logs/pid_3202984_2024-12-03_14-21-14/merge_0.log
+vmanager: *W,coverage.cannot_create_merged_ucm: Cannot create merge ucm for session htax_regress.shubkumr7.24_12_03_02_26_55_7183. This may extremely slow down the performance. Reason: didn't succeed in merging the ucms.
+vmanager: *E,DBERR: Error loading database file /home/grads/s/shubkumr7/UVM_LABs/lab-10-ShubhamKumartamu/work/sim/regression/htax_regress.shubkumr7.24_12_03_02_26_55_7183/model_dir/icc_4e8e3c4e_7997b529.ucm.
+
